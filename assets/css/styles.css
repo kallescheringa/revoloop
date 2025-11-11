@@ -231,16 +231,59 @@ footer {
   margin-bottom: 1.5rem;
 }
 
-.footer-links {
 
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.footer-socials {
+.footer-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
 
+.footer-links a:hover {
+  color: #008c3a; /* jouw groene Revoloop-kleur */
+}
+
+.footer-social {
+  text-align: right;
+}
+
+.footer-social p {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.social-icons a {
+  color: #000;
+  font-size: 1.3rem;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #008c3a; /* groene hoverkleur */
+  transform: translateY(-2px);
 }
 
 .footer-bottom {
+  text-align: left;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 1rem;
+}
 
+.footer-bottom a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
 }
 
 /* ==============================
