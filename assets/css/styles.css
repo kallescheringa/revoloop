@@ -19,6 +19,8 @@ body {
   background-size: cover;       /* zorgt dat de foto het hele scherm vult */
   background-position: center;  /* centreert de foto */
   background-repeat: no-repeat; /* voorkomt dat de foto herhaald wordt */
+  background-attachment: fixed;
+
   color: #333;
   line-height: 1.6;
   min-height: 100vh;
@@ -150,21 +152,24 @@ footer {
 ============================== */
 
 .container {
+  background-color: #F5FFF5;
   display: flex;          /* side-by-side layout */
   align-items: flex-start; /* align vertically at top */
   gap: 1rem;               /* space between image and text */
-  padding: 1rem 2rem;         /* vertical padding */
-}
-
-.container img {
-  width: 33%;              /* image takes 33% of container */
-  height: auto;             /* maintain aspect ratio */
-  border: 0px solid #fff;  /* example border */
-  box-shadow: 0 0 0 10px #006400; /* dark green outer border */
+  padding: 3rem 2rem;         /* vertical padding */
+  margin: 4rem
+  
 }
 
 .container .text {
   flex: 1;                 /* text takes remaining space */
+}
+
+.container img {
+  max-width: 600px;       /* limit image width */
+  height: auto;           /* maintain aspect ratio */
+  border-radius: 8px;    /* optional: rounded corners */
+  align-content: center;
 }
 
 .text-center {
