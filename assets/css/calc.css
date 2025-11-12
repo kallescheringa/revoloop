@@ -121,11 +121,12 @@ nav a:hover {
   transition: var(--transition);
 }
 
-#pla-calculator input:focus,
-#pla-calculator select:focus {
-  border-color: var(--green);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(26,188,156,0.15);
+#pla-calculator input,
+#pla-calculator select {
+  display: block;
+  width: 100%;
+  max-width: 100%;          /* voorkomt dat het breder wordt dan de div */
+  margin: 0 auto;
 }
 
 #pla-calculator button {
@@ -144,6 +145,11 @@ nav a:hover {
 #pla-calculator button:hover {
   background: linear-gradient(90deg, #20c997, #1b7f1b);
   transform: translateY(-1px);
+}
+
+#pla-calculator,
+#pla-calculator * {
+  box-sizing: border-box; /* houdt alles netjes binnen de container */
 }
 
 /* -----------------------------
