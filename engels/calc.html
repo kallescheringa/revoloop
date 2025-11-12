@@ -1,0 +1,240 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/calc.css">
+    <meta charset="UTF-8">
+    <title>Revoloop Credit Calculator</title>
+</head>
+
+  <style>
+    body {
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f5fff5;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 0.3rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: #228B22;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #006400;
+    }
+
+    #log {
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1rem;
+      border-radius: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #log table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #log th, #log td {
+      border-bottom: 1px solid #ccc;
+      padding: 0.5rem;
+    }
+
+    #log th {
+      background: rgba(0, 100, 0, 0.1);
+      color: #006400;
+    }
+  </style>
+
+<body>
+
+<header>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="translate-btn">
+      <button onclick="location.href='../nederlands/calc.html'">🌐 EN / NL</button>
+  </div>
+</header>
+
+<section id="pla-calculator">
+  <h2>Calculate Your Store Credit</h2>
+  <p>Return your PLA waste and instantly see how much store credit you earn.</p>
+
+  <form id="calc-form">
+    <label for="email">Email Address (optional)</label>
+    <input id="email" type="email" placeholder="you@example.com" />
+
+    <label for="weight">How many kilograms of PLA are you returning?</label>
+    <input id="weight" type="number" min="0" step="0.01" value="1" required />
+
+    <label for="quality">What is the condition of the material?</label>
+    <select id="quality">
+      <option value="0.20">Mixed / contaminated (lowest value - €0.20/kg)</option>
+      <option value="0.50" selected>Clean (average - €0.50/kg)</option>
+      <option value="1.00">Sorted & clean (highest value - €1.00/kg)</option>
+    </select>
+
+    <button type="button" id="calc">Calculate Store Credit</button>
+  </form>
+
+  <div id="result" style="display:none; margin-top:1.5rem;">
+    <h3>You will receive:</h3>
+    <p id="credit" style="font-size:1.5rem; font-weight:700; color:#006400;">€ 0.00</p>
+    <p id="note" style="color:#333;">—</p>
+  </div>
+</section>
+
+<section id="log">
+  <h3>Calculation History</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Kilograms</th>
+        <th>Quality</th>
+        <th>Credit</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="log-body">
+      <tr>
+        <td>John.Pork@example.com</td>
+        <td>25</td>
+        <td>€0.50/kg</td>
+        <td>€12.50</td>
+        <td>2025-11-10</td>
+      </tr>
+      <tr>
+        <td>Tim.Cheese@example.com</td>
+        <td>18</td>
+        <td>€1.00/kg</td>
+        <td>€18.00</td>
+        <td>2025-11-08</td>
+      </tr>
+      <tr>
+        <td>Kippen.Rijder@example.com</td>
+        <td>32</td>
+        <td>€0.20/kg</td>
+        <td>€6.40</td>
+        <td>2025-11-07</td>
+      </tr>
+      <tr>
+        <td>Hooog.Riddaahh@example.com</td>
+        <td>12</td>
+        <td>€0.50/kg</td>
+        <td>€6.00</td>
+        <td>2025-11-05</td>
+      </tr>
+      <tr>
+        <td>Absolute.Bioscoop@example.com</td>
+        <td>40</td>
+        <td>€1.00/kg</td>
+        <td>€40.00</td>
+        <td>2025-11-01</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<script>
+  const el = id => document.getElementById(id);
+  const fmt = v => Number.isFinite(v)
+    ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '—';
+
+  function loadLog() {
+    const log = JSON.parse(localStorage.getItem('revoloopLog') || '[]');
+    const tbody = el('log-body');
+    tbody.innerHTML = '';
+    log.forEach(entry => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${entry.email || '—'}</td>
+        <td>${entry.weight} kg</td>
+        <td>€${fmt(entry.quality)}/kg</td>
+        <td>€${fmt(entry.credit)}</td>
+        <td>${entry.date}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  function saveLog(entry) {
+    const log = JSON.parse(localStorage.getItem('revoloopLog') || '[]');
+    log.unshift(entry); // newest first
+    localStorage.setItem('revoloopLog', JSON.stringify(log));
+  }
+
+  function calculate() {
+    const weight = parseFloat(el('weight').value) || 0;
+    const value = parseFloat(el('quality').value) || 0;
+    const factor = 1.2;
+    const credit = weight * value * factor;
+    const email = el('email').value.trim();
+    const date = new Date().toLocaleString('en-GB');
+
+    // update result
+    el('credit').textContent = '€ ' + fmt(credit);
+    el('note').textContent = `${weight.toFixed(2)} kg × €${value.toFixed(2)}/kg × 1.2 incentive`;
+    el('result').style.display = 'block';
+
+    // save to log
+    const entry = { email, weight, quality: value, credit, date };
+    saveLog(entry);
+    loadLog();
+  }
+
+  el('calc').addEventListener('click', () => {
+    calculate();
+    el('credit').animate([{ transform: 'scale(1.05)' }, { transform: 'scale(1)' }], { duration: 250 });
+  });
+
+  // Load log on startup
+  loadLog();
+</script>
+</body>
+</html>
