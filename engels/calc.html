@@ -1,10 +1,7 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="../assets/css/calc.css">
     <meta charset="UTF-8">
     <title>Revoloop Credit Calculator</title>
@@ -17,7 +14,6 @@
       text-align: center;
       padding: 2rem;
     }
-
     form {
       max-width: 400px;
       margin: 0 auto;
@@ -26,64 +22,30 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-    }
-
+    label { display: block; margin-top: 1rem; }
     input, select {
-      width: 100%;
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-top: 0.3rem;
+      width: 100%; padding: 0.5rem; border-radius: 6px;
+      border: 1px solid #ccc; margin-top: 0.3rem;
     }
-
     button {
-      margin-top: 1rem;
-      background-color: #228B22;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      margin-top: 1rem; background-color: #228B22; color: white;
+      border: none; padding: 0.75rem 1.5rem; border-radius: 8px;
+      cursor: pointer; transition: background 0.3s ease;
     }
-
-    button:hover {
-      background-color: #006400;
-    }
-
+    button:hover { background-color: #006400; }
     #log {
-      margin-top: 2rem;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 1rem;
-      border-radius: 10px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      overflow-x: auto;
+      margin-top: 2rem; background: rgba(255, 255, 255, 0.7);
+      padding: 1rem; border-radius: 10px; max-width: 800px;
+      margin-left: auto; margin-right: auto; overflow-x: auto;
     }
-
-    #log table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
+    #log table { width: 100%; border-collapse: collapse; }
     #log th, #log td {
-      border-bottom: 1px solid #ccc;
-      padding: 0.5rem;
+      border-bottom: 1px solid #ccc; padding: 0.5rem;
     }
-
-    #log th {
-      background: rgba(0, 100, 0, 0.1);
-      color: #006400;
-    }
+    #log th { background: rgba(0, 100, 0, 0.1); color: #006400; }
 </style>
 
 <body>
-
 <header>
   <nav>
     <ul>
@@ -94,7 +56,6 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
-
   <div class="translate-btn">
       <button onclick="location.href='../nederlands/calc.html'">🌐 EN / NL</button>
   </div>
@@ -111,27 +72,26 @@
     <label for="weight">How many kilograms of PLA are you returning?</label>
     <input id="weight" type="number" min="0" step="0.01" value="1" required />
 
-    <label for="quality">What is the condition of the material?</label>
+    <label for="quality">Material condition (value per kg in €)</label>
     <select id="quality">
-      <option value="0.20">Mixed / contaminated (lowest value - €0.20/kg)</option>
-      <option value="0.50" selected>Clean (average - €0.50/kg)</option>
-      <option value="1.00">Sorted & clean (highest value - €1.00/kg)</option>
+      <option value="0.20">Mixed / contaminated (€0.20/kg)</option>
+      <option value="0.50" selected>Clean (€0.50/kg)</option>
+      <option value="1.00">Sorted & clean (€1.00/kg)</option>
     </select>
 
     <label for="customer">Customer Type</label>
-      <select id="customer">
-        <option value="Individual" selected>Individual</option>
-        <option value="Makerspace">Makerspace</option>
-        <option value="Other">Other</option>
-      </select>
+    <select id="customer">
+      <option value="Individual" selected>Individual</option>
+      <option value="Makerspace">Makerspace</option>
+      <option value="Other">Other</option>
+    </select>
 
-
-    <button type="button" id="calc">Calculate Store Credit</button>
+    <button type="button" id="calc">Calculate Store Credit (in cents)</button>
   </form>
 
   <div id="result" style="display:none; margin-top:1.5rem;">
     <h3>You will receive:</h3>
-    <p id="credit" style="font-size:1.5rem; font-weight:700; color:#006400;">€ 0.00</p>
+    <p id="credit" style="font-size:1.5rem; font-weight:700; color:#006400;">0</p>
     <p id="note" style="color:#333;">—</p>
   </div>
 </section>
@@ -144,59 +104,32 @@
         <th>Email</th>
         <th>Customer</th>
         <th>Kilograms</th>
-        <th>Quality</th>
-        <th>Credit</th>
+        <th>Quality (cent/kg)</th>
+        <th>Credit (cent)</th>
         <th>Date</th>
       </tr>
     </thead>
-    <tbody id="log-body">
-      <!-- Rows worden via JavaScript geladen -->
-    </tbody>
+    <tbody id="log-body"></tbody>
   </table>
 </section>
 
 <script>
 const el = id => document.getElementById(id);
-const fmt = v => Number.isFinite(v)
-  ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  : '—';
-
-const fakeData = [
-  { email: "John.Pork@example.com", customer: "Individual", weight: 25, quality: 0.50, credit: 25*0.50*1.2, date: "2025-11-10" },
-  { email: "Tim.Cheese@example.com", customer: "Makerspace", weight: 18, quality: 1.00, credit: 18*1.00*1.2, date: "2025-11-08" },
-  { email: "Kippen.Rijder@example.com", customer: "Other", weight: 32, quality: 0.20, credit: 32*0.20*1.2, date: "2025-11-07" },
-  { email: "Hooog.Riddaahh@example.com", customer: "Makerspace", weight: 12, quality: 0.50, credit: 12*0.50*1.2, date: "2025-11-05" },
-  { email: "Absolute.Bioscoop@example.com", customer: "Individual", weight: 40, quality: 1.00, credit: 40*1.00*1.2, date: "2025-11-01" }
-];
+const fmt = v => Number.isFinite(v) ? v.toLocaleString('en-US') : '—';
 
 function loadLog() {
-  const log = JSON.parse(localStorage.getItem('revoloopLog') || '[]');
+  const log = JSON.parse(localStorage.getItem('revoloopLogCentEN') || '[]');
   const tbody = el('log-body');
   tbody.innerHTML = '';
 
-  // 1️⃣ Nieuwe berekeningen bovenaan
   log.forEach(entry => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${entry.email || '—'}</td>
       <td>${entry.customer}</td>
       <td>${entry.weight} kg</td>
-      <td>€${fmt(entry.quality)}/kg</td>
-      <td>€${fmt(entry.credit)}</td>
-      <td>${entry.date}</td>
-    `;
-    tbody.appendChild(row);
-  });
-
-  // 2️⃣ Fake data onderaan
-  fakeData.forEach(entry => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${entry.email}</td>
-      <td>${entry.customer}</td>
-      <td>${entry.weight} kg</td>
-      <td>€${fmt(entry.quality)}/kg</td>
-      <td>€${fmt(entry.credit)}</td>
+      <td>${fmt(entry.qualityCent)}</td>
+      <td>${fmt(entry.credit)}</td>
       <td>${entry.date}</td>
     `;
     tbody.appendChild(row);
@@ -204,39 +137,38 @@ function loadLog() {
 }
 
 function saveLog(entry) {
-  const log = JSON.parse(localStorage.getItem('revoloopLog') || '[]');
-  log.unshift(entry); // newest first
-  localStorage.setItem('revoloopLog', JSON.stringify(log));
+  const log = JSON.parse(localStorage.getItem('revoloopLogCentEN') || '[]');
+  log.unshift(entry);
+  localStorage.setItem('revoloopLogCentEN', JSON.stringify(log));
 }
 
 function calculate() {
   const weight = parseFloat(el('weight').value) || 0;
-  const value = parseFloat(el('quality').value) || 0;
-  const customer = el('customer').value || 'Individual';
+  const valueEuro = parseFloat(el('quality').value) || 0;
+  const valueCent = Math.round(valueEuro * 100);
+  const customer = el('customer').value;
   const factor = 1.2;
-  const credit = weight * value * factor;
+
+  const credit = Math.round(weight * valueCent * factor);
+
   const email = el('email').value.trim();
   const date = new Date().toLocaleString('en-GB');
 
-  // update result
-  el('credit').textContent = '€ ' + fmt(credit);
-  el('note').textContent = `${weight.toFixed(2)} kg × €${value.toFixed(2)}/kg × 1.2 incentive`;
+  el('credit').textContent = fmt(credit);
+  el('note').textContent = `${weight.toFixed(2)} kg × ${valueCent} cent/kg × 1.2 incentive`;
   el('result').style.display = 'block';
 
-  const entry = { email, weight, quality: value, credit, customer, date };
+  const entry = { email, weight, qualityCent: valueCent, credit, customer, date };
   saveLog(entry);
   loadLog();
 }
 
-// Event listener
 el('calc').addEventListener('click', () => {
   calculate();
   el('credit').animate([{ transform: 'scale(1.05)' }, { transform: 'scale(1)' }], { duration: 250 });
 });
 
-// Initial load
 loadLog();
-
 </script>
 
 </body>
