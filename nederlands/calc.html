@@ -1,126 +1,99 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="../assets/css/calc.css">
     <meta charset="UTF-8">
-    <title>Revoloop Credit Calculator</title>
+    <title>Revoloop Winkeltegoed Calculator</title>
 </head>
 
 <style>
-    body {
-      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-      background: #f5fff5;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-top: 0.3rem;
-    }
-
-    button {
-      margin-top: 1rem;
-      background-color: #228B22;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #006400;
-    }
-
-    #log {
-      margin-top: 2rem;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 1rem;
-      border-radius: 10px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      overflow-x: auto;
-    }
-
-    #log table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    #log th, #log td {
-      border-bottom: 1px solid #ccc;
-      padding: 0.5rem;
-    }
-
-    #log th {
-      background: rgba(0, 100, 0, 0.1);
-      color: #006400;
-    }
-
-    #make-appointment {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #2b8a78;       /* accentkleur */
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
+body {
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f5fff5;
+    text-align: center;
+    padding: 2rem;
 }
 
-#make-appointment:hover {
-  background: #04735a;        /* donkerder groen bij hover */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-#make-appointment:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+label { display: block; margin-top: 1rem; }
+
+input, select {
+    width: 100%; padding: 0.5rem; border-radius: 6px;
+    border: 1px solid #ccc; margin-top: 0.3rem;
 }
 
+button {
+    margin-top: 1rem; background-color: #228B22; color: white;
+    border: none; padding: 0.75rem 1.5rem; border-radius: 8px;
+    cursor: pointer; transition: background 0.3s ease;
+}
+
+button:hover { background-color: #006400; }
+
+#log {
+    margin-top: 2rem; background: rgba(255, 255, 255, 0.7);
+    padding: 1rem; border-radius: 10px; max-width: 800px;
+    margin-left: auto; margin-right: auto; overflow-x: auto;
+}
+
+#log table { width: 100%; border-collapse: collapse; }
+#log th, #log td {
+    border-bottom: 1px solid #ccc; padding: 0.5rem;
+}
+#log th { background: rgba(0, 100, 0, 0.1); color: #006400; }
+
+/* Appointment button styles */
+#appointment {
+    display: none;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#appointment-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #2b8a78;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+#appointment-button:hover {
+    background: #04735a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+#appointment-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 </style>
 
 <body>
-
 <header>
   <nav>
     <ul>
-      <li><a href="index.html">Home</a></li>
+      <li><a href="../index.html">Home</a></li>
       <li><a href="shop.html">Winkel</a></li>
       <li><a href="about.html">Over Ons</a></li>
       <li><a href="services.html">Diensten</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
-
   <div class="translate-btn">
       <button onclick="location.href='../engels/calc.html'">🌐 NL / EN</button>
   </div>
@@ -137,7 +110,7 @@
     <label for="weight">Aantal kilogram PLA dat je inlevert</label>
     <input id="weight" type="number" min="0" step="0.01" value="1" required />
 
-    <label for="quality">Conditie van het materiaal (€-waarde per kg)</label>
+    <label for="quality">Conditie van het materiaal (€ per kg)</label>
     <select id="quality">
       <option value="0.20">Gemengd / vervuild (€0,20/kg)</option>
       <option value="0.50" selected>Rein (€0,50/kg)</option>
@@ -146,22 +119,23 @@
 
     <label for="customer">Type klant</label>
     <select id="customer">
-        <option value="Individu" selected>Individu</option>
-        <option value="Makerspace">Makerspace</option>
-        <option value="Overig">Overig</option>
+      <option value="Individu" selected>Individu</option>
+      <option value="Makerspace">Makerspace</option>
+      <option value="Overig">Overig</option>
     </select>
 
     <button type="button" id="calc">Bereken winkeltegoed (in centen)</button>
   </form>
 
+  <!-- Appointment button OUTSIDE the form -->
+  <div id="appointment">
+      <a id="appointment-button" href="appointment.html">Maak afspraak</a>
+  </div>
+
   <div id="result" style="display:none; margin-top:1.5rem;">
     <h3>Je ontvangt:</h3>
     <p id="credit" style="font-size:1.5rem; font-weight:700; color:#006400;">0</p>
     <p id="note" style="color:#333;">—</p>
-  </div>
-
-  <div id="appointment" style="display:none; margin-top:1rem;">
-    <a id="make-appointment" href="appointment.html">Maak afspraak</a>
   </div>
 </section>
 
@@ -171,7 +145,7 @@
     <thead>
       <tr>
         <th>E-mail</th>
-        <th>Klanttype</th>
+        <th>Klant</th>
         <th>Kilogram</th>
         <th>Conditiewaarde (cent/kg)</th>
         <th>Winkeltegoed (cent)</th>
@@ -184,12 +158,10 @@
 
 <script>
 const el = id => document.getElementById(id);
-const fmt = v => Number.isFinite(v)
-  ? v.toLocaleString('nl-NL')
-  : '—';
+const fmt = v => Number.isFinite(v) ? v.toLocaleString('nl-NL') : '—';
 
 function loadLog() {
-  const log = JSON.parse(localStorage.getItem('revoloopLogCent') || '[]');
+  const log = JSON.parse(localStorage.getItem('revoloopLogCentNL') || '[]');
   const tbody = el('log-body');
   tbody.innerHTML = '';
 
@@ -208,9 +180,9 @@ function loadLog() {
 }
 
 function saveLog(entry) {
-  const log = JSON.parse(localStorage.getItem('revoloopLogCent') || '[]');
+  const log = JSON.parse(localStorage.getItem('revoloopLogCentNL') || '[]');
   log.unshift(entry);
-  localStorage.setItem('revoloopLogCent', JSON.stringify(log));
+  localStorage.setItem('revoloopLogCentNL', JSON.stringify(log));
 }
 
 function calculate() {
@@ -229,17 +201,12 @@ function calculate() {
   el('note').textContent = `${weight.toFixed(2)} kg × ${valueCent} cent/kg × 1,2 incentive`;
   el('result').style.display = 'block';
 
-  const entry = {
-    email,
-    weight,
-    qualityCent: valueCent,
-    credit,
-    customer,
-    date
-  };
-
+  const entry = { email, weight, qualityCent: valueCent, credit, customer, date };
   saveLog(entry);
   loadLog();
+
+  // Show appointment button
+  el('appointment').style.display = 'block';
 }
 
 el('calc').addEventListener('click', () => {
@@ -248,15 +215,6 @@ el('calc').addEventListener('click', () => {
 });
 
 loadLog();
-
-// After calculate() finishes, show appointment button
-function showAppointmentButton() {
-  document.getElementById('appointment').style.display = 'block';
-}
-
-
-showAppointmentButton();
-
 </script>
 
 </body>

@@ -8,65 +8,78 @@
 </head>
 
 <style>
-    body {
-      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-      background: #f5fff5;
-      text-align: center;
-      padding: 2rem;
-    }
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    label { display: block; margin-top: 1rem; }
-    input, select {
-      width: 100%; padding: 0.5rem; border-radius: 6px;
-      border: 1px solid #ccc; margin-top: 0.3rem;
-    }
-    button {
-      margin-top: 1rem; background-color: #228B22; color: white;
-      border: none; padding: 0.75rem 1.5rem; border-radius: 8px;
-      cursor: pointer; transition: background 0.3s ease;
-    }
-    button:hover { background-color: #006400; }
-    #log {
-      margin-top: 2rem; background: rgba(255, 255, 255, 0.7);
-      padding: 1rem; border-radius: 10px; max-width: 800px;
-      margin-left: auto; margin-right: auto; overflow-x: auto;
-    }
-    #log table { width: 100%; border-collapse: collapse; }
-    #log th, #log td {
-      border-bottom: 1px solid #ccc; padding: 0.5rem;
-    }
-    #log th { background: rgba(0, 100, 0, 0.1); color: #006400; }
-
-    #make-appointment {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #2b8a78;       /* accentkleur */
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
+body {
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f5fff5;
+    text-align: center;
+    padding: 2rem;
 }
 
-#make-appointment:hover {
-  background: #04735a;        /* donkerder groen bij hover */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-#make-appointment:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+label { display: block; margin-top: 1rem; }
+
+input, select {
+    width: 100%; padding: 0.5rem; border-radius: 6px;
+    border: 1px solid #ccc; margin-top: 0.3rem;
+}
+
+button {
+    margin-top: 1rem; background-color: #228B22; color: white;
+    border: none; padding: 0.75rem 1.5rem; border-radius: 8px;
+    cursor: pointer; transition: background 0.3s ease;
+}
+
+button:hover { background-color: #006400; }
+
+#log {
+    margin-top: 2rem; background: rgba(255, 255, 255, 0.7);
+    padding: 1rem; border-radius: 10px; max-width: 800px;
+    margin-left: auto; margin-right: auto; overflow-x: auto;
+}
+
+#log table { width: 100%; border-collapse: collapse; }
+#log th, #log td {
+    border-bottom: 1px solid #ccc; padding: 0.5rem;
+}
+#log th { background: rgba(0, 100, 0, 0.1); color: #006400; }
+
+/* Appointment button styles */
+#appointment {
+    display: none;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#appointment-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #2b8a78;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+#appointment-button:hover {
+    background: #04735a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+#appointment-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 </style>
 
@@ -75,10 +88,10 @@
   <nav>
     <ul>
       <li><a href="../index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
   <div class="translate-btn">
@@ -112,20 +125,17 @@
     </select>
 
     <button type="button" id="calc">Calculate Store Credit (in cents)</button>
-
-    <div id="appointment" style="display:none; margin-top:1rem;">
-      <a id="make-appointment" href="appointment.html">Make an Appointment</a>
-    </div>
   </form>
+
+  <!-- Appointment button OUTSIDE the form -->
+  <div id="appointment">
+      <a id="appointment-button" href="appointment.html">Make an Appointment</a>
+  </div>
 
   <div id="result" style="display:none; margin-top:1.5rem;">
     <h3>You will receive:</h3>
     <p id="credit" style="font-size:1.5rem; font-weight:700; color:#006400;">0</p>
     <p id="note" style="color:#333;">—</p>
-  </div>
-
-  <div id="appointment" style="display:none; margin-top:1rem;">
-    <a id="make-appointment" href="appointment.html">Maak afspraak</a>
   </div>
 </section>
 
@@ -194,6 +204,9 @@ function calculate() {
   const entry = { email, weight, qualityCent: valueCent, credit, customer, date };
   saveLog(entry);
   loadLog();
+
+  // Show appointment button
+  el('appointment').style.display = 'block';
 }
 
 el('calc').addEventListener('click', () => {
